@@ -37,7 +37,10 @@ def forecast(cats, fig, ax, params):
     survey, sigma, blend_threshold, sup_threshold, nb_pix, type_, mode, y_max_1, y_max_2, y_max_3, y_max_4 = params
     seg = f'{sigma} {survey}'
     if mode == 'CLEAR':
-        [axe.clear() for axe in ax.flatten()]
+        ax[0].clear() for axe in ax.flatten()
+        ax[1].clear() for axe in ax.flatten()
+        ax[2].clear() for axe in ax.flatten()
+        ax[3].clear() for axe in ax.flatten()
         alpha = 0.5
         color = 'cornflowerblue'
     else:
@@ -48,8 +51,12 @@ def forecast(cats, fig, ax, params):
         except Exception:
             y_maxs = [y_max_1]
     
-    out_cat = cats[seg]    
-    [axe.set_axisbelow(True) for axe in ax.flatten()]
+    out_cat = cats[seg]
+    ax[0].set_axisbelow(True)
+    ax[1].set_axisbelow(True)
+    ax[2].set_axisbelow(True)
+    ax[3].set_axisbelow(True)
+    # [axe.set_axisbelow(True) for axe in ax.flatten()]
     if 'wide' in seg:
         sb_lims=[18, 20, 22, 24, 26]
 
