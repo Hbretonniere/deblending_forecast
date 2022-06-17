@@ -37,10 +37,10 @@ def forecast(cats, fig, ax, params):
     survey, sigma, blend_threshold, sup_threshold, nb_pix, type_, mode, y_max_1, y_max_2, y_max_3, y_max_4 = params
     seg = f'{sigma} {survey}'
     if mode == 'CLEAR':
-        ax[0].clear() for axe in ax.flatten()
-        ax[1].clear() for axe in ax.flatten()
-        ax[2].clear() for axe in ax.flatten()
-        ax[3].clear() for axe in ax.flatten()
+        ax[0].clear()
+        ax[1].clear()
+        ax[2].clear()
+        ax[3].clear()
         alpha = 0.5
         color = 'cornflowerblue'
     else:
