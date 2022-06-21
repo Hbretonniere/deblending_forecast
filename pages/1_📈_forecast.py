@@ -16,19 +16,22 @@ def select_parameters():
     survey = st.sidebar.radio('Select the Survey', ['wide', 'deep'], horizontal=True)
     sigma = st.sidebar.radio('Select the sigma threshold', ['0.8', '1', '2'], horizontal=True)
     seg = f'{sigma} {survey}'
-    blend_threshold = st.sidebar.slider('Blendedness Threshold', 0.1, 10., 0.5)
-    sup_threshold = st.sidebar.slider('Undectability Threshold', 100, 1000, 50)
+    st.sidebar.markdown('----------------------')
+    blend_threshold = st.sidebar.slider('Blendedness Threshold', 0.1, 10., 1., 0.1)
+    sup_threshold = st.sidebar.slider('Undectability Threshold', 100, 1000, 500, 10)
     nb_pix = st.sidebar.number_input('Minimum number of pixels for detection', 1, 15, 4)
+    st.sidebar.markdown('----------------------')
+
     type_= st.sidebar.radio('Select the quantity to be plotted', ['percentage', 'Number'], horizontal=True)
     mode = st.sidebar.radio('Select the mask threshold', ['CLEAR', 'Superpose'], horizontal=True)
     if type_ == 'percentage':
-        global_max = 100
+        global_max = 100.
     else:
         global_max = 10000
-    y_max_1 = st.sidebar.slider('(0, 0) y max', 1, global_max, value=ranges[seg][0])
-    y_max_2 = st.sidebar.slider('(0, 1) y max', 1, global_max, value=ranges[seg][1])
-    y_max_3 = st.sidebar.slider('(1, 0) y max', 1, global_max, value=ranges[seg][2])
-    y_max_4 = st.sidebar.slider('(1, 1) y max', 1, global_max, value=ranges[seg][3])
+    y_max_1 = st.sidebar.slider('(0, 0) y max', 1., global_max, value=ranges[seg][0])
+    y_max_2 = st.sidebar.slider('(0, 1) y max', 1., global_max, value=ranges[seg][1])
+    y_max_3 = st.sidebar.slider('(1, 0) y max', 1., global_max, value=ranges[seg][2])
+    y_max_4 = st.sidebar.slider('(1, 1) y max', 1., global_max, value=ranges[seg][3])
     return [survey, sigma, blend_threshold, sup_threshold, nb_pix, type_, mode, y_max_1, y_max_2, y_max_3, y_max_4]
 
 # @st.cache(hash_funcs={matplotlib.figure.Figure: lambda _: None}, suppress_st_warning=True)
@@ -156,7 +159,7 @@ def forecast(cats, fig, ax, params):
 
 st.set_page_config(page_title="Forecast", page_icon="📈")
 st.markdown("# 📈 &nbsp; &nbsp; Interactive Blending Forecast")
-st.sidebar.header(" 📈 Forecast")
+# st.sidebar.header(" 📈 Forecast")
 
 catalogs = load_data()
 
