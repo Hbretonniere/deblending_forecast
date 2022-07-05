@@ -27,9 +27,9 @@ def load_cat():
         # print(file)
         # cat.append(Table.read(file))
         # cat[-1]['flag'] = np.zeros_like(cat[-1]['mag'])
-    file = "data/new_euc_3_sim_TU_DC_out_cat_flaged.fits"
+    file = "data/cat_1_deep.fits"
     cat = Table.read(file)
-    cat['flag'] = np.zeros_like(cat['mag'])
+    cat['flag'] = np.zeros_like(cat['area'])
 
     for j in range(len(cat)):
         if cat['blendedness'][j] == 0:
@@ -80,44 +80,19 @@ def visual(catalog, fig, img, seg, ax):
 
     img = img[xs[0]:xs[-1], ys[0]:ys[-1]]
     seg = seg[xs[0]:xs[-1], ys[0]:ys[-1]]
-    # st.write(catalog)
-    # st.write(catalog[np.where(catalog['flag']==2)[0][10:20]])
-    indices = np.where((catalog['X'] < ys[-1]) & (catalog['X'] > ys[0]) & (catalog['Y'] < xs[1]) & (catalog['Y'] > xs[0]))
-    # st.write(len(indices[0]))
-    new_catalog = catalog[indices]
-    # ticks_labs = ['iso', 'overlap \n only', 'blended', 'too \n blended']
-    # st.write(np.shape(img), np.shape(seg))
-    a = ax[1].imshow(seg)
 
-    # if linear == False:
-    #     interval = ZScaleInterval()
-    #     a = interval.get_limits(img)
-    #     c = ax[1].imshow(img, vmin=a[0], vmax=3*a[1]-2*contrast*a[1])
-    # else:
+    indices = np.where((catalog['X'] < ys[-1]) & (catalog['X'] > ys[0]) & (catalog['Y'] < xs[1]) & (catalog['Y'] > xs[0]))
+    new_catalog = catalog[indices]
+
+    a = ax[1].imshow(seg, vmin=0, vmax=3)
+
     max_ = np.max(img)
     c = ax[0].imshow(img, vmin=np.min(img), vmax=max_ - contrast*max_)
 
     stars = np.where((np.array(new_catalog['type'])==0))
     ax[1].scatter(np.array(new_catalog['X']).astype('int')-1-ys[0], np.array(new_catalog['Y']).astype('int')-1-xs[0], marker='.', s=10, c=new_catalog['flag'], cmap=cmap, vmin=-1, vmax=2)
     ax[1].legend(loc=(0, 1.2))
-    # ax[0].scatter(np.array(catalog['X'])[stars[0]].astype('int')-1-xs[0], np.array(catalog['Y'])[stars[0]].astype('int')-1-ys[0], marker='x', s=15, c='Pink')
 
-    # scat = ax[1].scatter(np.array(catalog['X']).astype('int')-1-xs[0], np.array(catalog['Y']).astype('int')-1-ys[0], marker='.', s=10, c=catalog['flag'], cmap=cmap)
-    # ax[1].scatter(np.array(catalog['X'])[stars[0]].astype('int')-1-xs[0], np.array(catalog['Y'])[stars[0]].astype('int')-1-ys[0], marker='x', s=15, c='Pink')
-
-    # cbar1 = plt.colorbar(scat, ax=ax[0], aspect=5)
-    # for i, j in enumerate(ticks_labs):
-    #     cbar1.ax.text(0.5, (i-0.5)/1.3-0.2, j, ha='center', va='center', fontsize=8, color='black')
-    #     cbar1.set_label('Flag', fontsize=20)
-    #     cbar1.set_ticklabels([])
-    #     cbar1.set_ticks([])
-
-    # cbar2 = plt.colorbar(scat, ax=ax[1], aspect=5)
-    # for i, j in enumerate(ticks_labs):
-    #     cbar2.ax.text(0.5, (i-0.5)/1.3-0.2, j, ha='center', va='center', fontsize=8, color='black')
-    #     cbar2.set_label('Flag', fontsize=20)
-    #     cbar2.set_ticklabels([])
-    #     cbar2.set_ticks([])
     ax[0].set_title('Galaxy field')
     ax[1].set_title('Segmentation map')
     
@@ -127,10 +102,10 @@ def visual(catalog, fig, img, seg, ax):
     ax[1].set_ylabel('X')
     st.pyplot(fig)
     fig, ax = plt.subplots(figsize=(10, 0.05))
-    ax.scatter([], [], c='orange', marker='.', s=60, label='Blended')
+    ax.scatter([], [], c='blue', marker='.', s=60, label='Blended')
     ax.scatter([], [], c='red', marker='.', s=60, label='Overlapping Only')
     ax.scatter([], [], c='orange', marker='.', s=60, label='Too blended')
-    ax.scatter([], [], facecolors='none', linewidth=0.5, edgecolors='black', marker='.', s=100, label='Overlapping Only')
+    ax.scatter([], [], facecolors='none', linewidth=0.5, edgecolors='black', marker='.', s=100, label='Isolated')
     
     ax.legend(ncol=4)
 

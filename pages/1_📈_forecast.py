@@ -19,7 +19,7 @@ def select_parameters():
     st.sidebar.markdown('----------------------')
     blend_threshold = st.sidebar.slider('Blendedness Threshold', 0.1, 10., 1., 0.1)
     sup_threshold = st.sidebar.slider('Undectability Threshold', 100, 1000, 500, 10)
-    nb_pix = st.sidebar.number_input('Minimum number of pixels for detection', 1, 15, 4)
+    nb_pix = st.sidebar.number_input('Minimum number of pixels for detection', 1, 15, 10)
     st.sidebar.markdown('----------------------')
 
     type_= st.sidebar.radio('Select the quantity to be plotted', ['percentage', 'Number'], horizontal=True)
