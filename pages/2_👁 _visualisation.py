@@ -74,8 +74,8 @@ def visual(catalog, fig, img, seg, ax):
     colors = ['white', 'red', 'blue', 'orange']
     cmap = mpl.colors.ListedColormap(colors)
 
-    xs = st.slider('X range', 0, 3000, (670, 930))
-    ys = st.slider('Y range', 0, 3000, (890, 1120))
+    xs = st.slider('X range', 0, 3000, (754, 1014))
+    ys = st.slider('Y range', 0, 3000, (955, 1223))
     contrast = st.slider('Constrast', -1., 1., 0., 0.05)
 
     img = img[xs[0]:xs[-1], ys[0]:ys[-1]]

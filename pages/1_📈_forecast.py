@@ -45,7 +45,7 @@ def forecast(cats, fig, ax, params):
         ax[2].clear()
         ax[3].clear()
         alpha = 0.5
-        color = 'cornflowerblue'
+        color = 'tomato' #'cornflowerblue'
     else:
         alpha = 0.1
         color=None
@@ -107,7 +107,6 @@ def forecast(cats, fig, ax, params):
                                    (np.array(out_cat['area']) > nb_pix))[0])
             nb_gals.append(nb_gal)
             detect_blend.append(np.array(blend) - np.array(too_blend))
-    
     tot_overlap = np.sum(overlaps)
     tot_blend = np.sum(blends)
     tot_too_blend = np.sum(too_blended)
@@ -126,28 +125,29 @@ def forecast(cats, fig, ax, params):
     fs = 15
     
 
-    ax[0].bar(sb_lims[:-1], overlaps, align='edge', width=2, edgecolor='black', color=color, alpha=alpha,  label=seg)
+    ax[0].bar(sb_lims[:-1], overlaps, align='edge', width=2, edgecolor='black', color=color, alpha=alpha,  label=survey)
 
     ax[0].set_xlabel("Surface brightness", fontsize=fs)
     ax[0].set_ylabel(f"{type_} of overlapping galaxies", fontsize=fs)
     ax[0].set_xticks(sb_lims)
     ax[0].set_title(f"Total : {tot_overlap:.1f}%", fontsize=fs)
+    ax[0].legend(fontsize=15)
 
     ax[1].set_xticks(sb_lims)
     ax[1].bar(sb_lims[:-1], blends, align='edge', width=2, edgecolor='black', color=color, alpha=alpha)#,  label=r'$0.8\sigma$ Deep')
     ax[1].set_xlabel("Surface brightness", fontsize=fs)
-    ax[1].set_ylabel(f"{type_} of Blended Galaxy", fontsize=fs)
+    ax[1].set_ylabel(f"{type_} of blended galaxies", fontsize=fs)
     ax[1].set_title(f"Total : {tot_blend:.1f}% ", fontsize=fs)
 
     ax[2].bar(sb_lims[:-1], too_blended, align='edge', width=2, edgecolor='black', alpha=alpha, color=color)#, label=r'$0.8\sigma$ Deep')
     ax[2].set_xlabel("Surface brightness", fontsize=fs)
     ax[2].set_xticks(sb_lims)
-    ax[2].set_ylabel(f"{type_} of Undetectable \n Blended Galaxy", fontsize=fs)
+    ax[2].set_ylabel(f"{type_} of undetectable \n blended galaxies", fontsize=fs)
     ax[2].set_title(f"Total : {tot_too_blend:.1f}% ", fontsize=fs)
 
     ax[3].bar(sb_lims[:-1], detect_blend, align='edge', width=2, edgecolor='black', color=color, alpha=alpha)#,  label=r'$0.8\sigma$ Deep')
     ax[3].set_xlabel("Surface brightness", fontsize=fs)
-    ax[3].set_ylabel(f"{type_} of Detectable \n Blended Galaxy", fontsize=fs)
+    ax[3].set_ylabel(f"{type_} of detectable \n blended galaxies", fontsize=fs)
     ax[3].set_xticks(sb_lims)
     ax[3].set_title(f"Total : {tot_detect_blend:.1f}%", fontsize=fs)
 
